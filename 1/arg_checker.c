@@ -6,7 +6,7 @@
 /*   By: dgoremyk <dgoremyk@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 21:15:05 by dgoremyk          #+#    #+#             */
-/*   Updated: 2022/12/02 16:34:09 by dgoremyk         ###   ########.fr       */
+/*   Updated: 2022/12/02 18:36:58 by dgoremyk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	both_cmd_not_found(t_node *data, char **av)
 
 void	empty_valid_path_checker(t_node *data, char **av)
 {
+	//printf("%s %s", data->valid_path1, data->valid_path2);
 	if ((data->valid_path1 == NULL) && (data->valid_path2 == NULL))
 		both_cmd_not_found(data, av);
 	else if (data->valid_path1 == NULL)
