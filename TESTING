@@ -1,0 +1,8 @@
+./pipex
+./pipex file cat cat outfile 
+./pipex infile cat cat outfile 
+./pipex infile “ls -l” cat outfile 
+./pipex infile “ls -l” “grep a” outfile
+./pipex infile “” “” outfile
+./pipex infile lol blah outfile
+./pipex /bin/ls /bin/cat outfile
