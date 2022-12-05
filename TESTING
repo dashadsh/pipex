@@ -1,6 +1,7 @@
 ./pipex
 ./pipex file cat cat outfile 
 ./pipex infile cat cat outfile 
+./pipex infile cat "grep -hello" outfile
 ./pipex infile “ls -l” cat outfile 
 ./pipex infile “ls -l” “grep a” outfile
 ./pipex infile “” “” outfile
