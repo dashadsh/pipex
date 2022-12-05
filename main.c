@@ -6,7 +6,7 @@
 /*   By: dgoremyk <dgoremyk@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:35:16 by dgoremyk          #+#    #+#             */
-/*   Updated: 2022/12/02 16:38:07 by dgoremyk         ###   ########.fr       */
+/*   Updated: 2022/12/05 14:36:16 by dgoremyk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,21 @@ void	process_2(t_node *data, char **envp)
 	}
 }
 
-void	pipex(t_node *data, char **av, char **envp)
+void	pipex(t_node *data, char **envp)
 {
 	pipe(data->pipe_fd);
 	if (pipe(data->pipe_fd) == -1)
-		perror_exit(data, av);
+		perror_exit(data);
 	data->pid1 = fork();
 	if (data->pid1 == -1)
-		perror_exit(data, av);
+		perror_exit(data);
 	else if (data->pid1 == 0)
 		process_1(data, envp);
 	else
 	{
 		data->pid2 = fork();
 		if (data->pid2 == -1)
-			perror_exit(data, av);
+			perror_exit(data);
 		else if (data->pid2 == 0)
 			process_2(data, envp);
 		else
@@ -81,7 +81,7 @@ void	pipex(t_node *data, char **av, char **envp)
 			close(data->pipe_fd[1]);
 			close(data->infile);
 			close(data->outfile);
-			free_struct(data, av);
+			free_struct(data);
 		}
 	}
 }
@@ -97,7 +97,7 @@ int	main(int ac, char **av, char **envp)
 	early_error_check(data, ac, av, envp);
 	open_files(data, av);
 	add_data(data, av, envp);
-	wrong_cmd_checker(data, av);
-	pipex (data, av, envp);
+	wrong_cmd_checker(data);
+	pipex (data, envp);
 	return (0);
 }

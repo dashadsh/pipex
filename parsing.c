@@ -6,7 +6,7 @@
 /*   By: dgoremyk <dgoremyk@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:40:37 by dgoremyk          #+#    #+#             */
-/*   Updated: 2022/12/02 18:38:18 by dgoremyk         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:25:24 by dgoremyk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*free_strjoin(char *s1, char const *s2)
 	return (dst);
 }
 
-char	**path_splitter(t_node *data, char **av, char **envp)
+char	**path_splitter(t_node *data, char **envp)
 {
 	char	**path_splitted;
 	int		i;
@@ -50,7 +50,7 @@ char	**path_splitter(t_node *data, char **av, char **envp)
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;
 	if (!envp[i])
-		error_exit(data, "envp not valid", av);
+		error_exit(data, "envp not valid");
 	path_splitted = ft_split(envp[i] + 5, ':');
 	i = 0;
 	while (path_splitted[i])
@@ -94,13 +94,13 @@ void	add_data(t_node *data, char **av, char **envp)
 {
 	data->cmd1 = cmd_splitter(av[2]);
 	data->cmd2 = cmd_splitter(av[3]);
-	data->path_splitted = path_splitter(data, av, envp);
-	if (access(av[2], X_OK) == 0)
-		data->valid_path1 = data->cmd1[0];
+	data->path_splitted = path_splitter(data, envp);
+	if (access(data->cmd1[0], X_OK) == 0)
+		data->valid_path1 = ft_strdup(data->cmd1[0]);
 	else
 		data->valid_path1 = get_valid_path(data->path_splitted, data->cmd1[0]);
-	if (access(av[3], X_OK) == 0)
-		data->valid_path2 = data->cmd2[0];
+	if (access(data->cmd2[0], X_OK) == 0)
+			data->valid_path2 = ft_strdup(data->cmd2[0]);
 	else
 		data->valid_path2 = get_valid_path(data->path_splitted, data->cmd2[0]);
 }

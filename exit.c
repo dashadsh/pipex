@@ -6,7 +6,7 @@
 /*   By: dgoremyk <dgoremyk@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 20:39:17 by dgoremyk          #+#    #+#             */
-/*   Updated: 2022/12/02 16:23:37 by dgoremyk         ###   ########.fr       */
+/*   Updated: 2022/12/05 14:30:23 by dgoremyk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_clear(char **str)
 	str = NULL;
 }
 
-void	free_struct(t_node *data, char **av)
+void	free_struct(t_node *data)
 {
 	if (data->path_splitted)
 		ft_clear(data->path_splitted);
@@ -34,23 +34,37 @@ void	free_struct(t_node *data, char **av)
 		ft_clear(data->cmd1);
 	if (data->cmd2)
 		ft_clear(data->cmd2);
-	if ((access(av[2], X_OK) != 0) && (data->valid_path1))
+	if (data->valid_path1)
 		free(data->valid_path1);
-	if ((access(av[3], X_OK) != 0) && (data->valid_path2))
+	if (data->valid_path2)
 		free(data->valid_path2);
 	free(data);
 }
+// void	free_struct(t_node *data, char **av)
+// {
+// 	if (data->path_splitted)
+// 		ft_clear(data->path_splitted);
+// 	if (data->cmd1)
+// 		ft_clear(data->cmd1);
+// 	if (data->cmd2)
+// 		ft_clear(data->cmd2);
+// 	if ((access(av[2], X_OK) != 0) && (data->valid_path1))
+// 		free(data->valid_path1);
+// 	if ((access(av[3], X_OK) != 0) && (data->valid_path2))
+// 		free(data->valid_path2);
+// 	free(data);
+// }
 
-void	perror_exit(t_node *data, char **av)
+void	perror_exit(t_node *data)
 {
 	perror("");
-	free_struct(data, av);
+	free_struct(data);
 	exit(EXIT_FAILURE);
 }
 
-void	error_exit(t_node *data, char *msg, char **av)
+void	error_exit(t_node *data, char *msg)
 {
 	write(STDERR_FILENO, msg, ft_strlen(msg));
-	free_struct(data, av);
+	free_struct(data);
 	exit(EXIT_FAILURE);
 }
